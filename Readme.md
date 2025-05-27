@@ -49,7 +49,7 @@ cargo run -- --help
 ```
 
 ## 📄 Licencia
-Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más información.
+Este proyecto está bajo la licencia GPL-3.0 license Consulta el archivo LICENSE para más información.
 
 ## 🤝 Contribuciones
 ¡Las contribuciones son bienvenidas! Puedes enviar issues, sugerencias o pull requests.
