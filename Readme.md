@@ -26,4 +26,31 @@
 git clone https://github.com/tu-usuario/server-version-checker.git
 cd server-version-checker
 cargo build --release
+```
+
+## 🧪 Uso
+
+Consultar uno o varios dominios y/o ips
+
+```bash
+cargo run -- google.com github.com
+```
+Mostrar todos los encabezados
+```bash
+cargo run -- example.com --all
+```
+Guardar resultados en un archivo
+```bash
+cargo run -- openai.com --save resultados.txt
+```
+Ver ayuda
+```bash
+cargo run -- --help
+```
+
+## 📄 Licencia
+Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más información.
+
+## 🤝 Contribuciones
+¡Las contribuciones son bienvenidas! Puedes enviar issues, sugerencias o pull requests.
 
