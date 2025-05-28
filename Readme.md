@@ -43,6 +43,11 @@ curl -fsSL https://raw.githubusercontent.com/jereok91/svcheck/refs/heads/main/in
 ⚠️  $INSTALL_DIR is not in your PATH.
 Add this line to your shell config (e.g., ~/.bashrc, ~/.zshrc)
 
+### Instaldor de Windows 
+[![Descargar para Windows](https://img.shields.io/badge/Windows-Descargar_Instalador-blue?style=for-the-badge&logo=windows)](https://github.com/jereok91/svcheck/blob/main/win/svcheck-installer.exe)
+
+[:package: Instalador Windows](https://github.com/jereok91/svcheck/blob/main/win/svcheck-installer.exe)
+
 ## 🧪 Uso
 
 Consultar uno o varios dominios y/o ips
