@@ -34,7 +34,7 @@ $(TARGETS):
 	cross build --release --target $@
 	mkdir -p $(OUT_DIR)/$@
 	cp target/$@/release/$(BIN_NAME)$(if $(findstring windows,$@),.exe,) $(OUT_DIR)/$@/
-	tar -czf $(OUT_DIR)/$@/$@.tar.gz -C $(OUT_DIR) $@/$(BIN_NAME)
+	tar -czf $(OUT_DIR)/$@/$@.tar.gz -C $(OUT_DIR) $@/$(BIN_NAME)$(if $(findstring windows,$@),.exe,)
 	
 
 # Limpiar binarios
