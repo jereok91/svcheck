@@ -18,23 +18,23 @@ case "$ARCH" in
   *) echo "Unsupported architecture: $ARCH"; exit 1 ;;
 esac
 
-case "${OS}" in
+case "$OS" in
     Linux | linux)
-        case "${ARCH}" in
+        case "$ARCH" in
             x86_64) TARGET="x86_64-unknown-linux-gnu" ;;
             arm64 | aarch64) TARGET="aarch64-unknown-linux-gnu";;
             *) echo "Arquitectura no soportada: ${OS} ${ARCH}" && exit 1 ;;
         esac
         ;;
-    Darwin | darwin)
-        case "${ARCH}" in
+    Darwin | macos)
+        case "$ARCH" in
             x86_64) TARGET="x86_64-apple-darwin" ;;
             arm64 | aarch64) TARGET="aarch64-apple-darwin" ;;
             *) echo "Arquitectura no soportada: ${OS} ${ARCH}" && exit 1 ;;
         esac
         ;;
     *)
-        echo "Sistema operativo no soportado: ${OS}"
+        echo "Sistema operativo no soportado: ${OS} ${ARCH}"
         exit 1
         ;;
 esac
