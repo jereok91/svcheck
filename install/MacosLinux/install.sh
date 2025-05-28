@@ -21,14 +21,14 @@ esac
 case "$OS" in
     Linux | linux)
         case "$ARCH" in
-            x86_64) TARGET="x86_64-unknown-linux-gnu" ;;
+            x64) TARGET="x86_64-unknown-linux-gnu" ;;
             arm64 | aarch64) TARGET="aarch64-unknown-linux-gnu";;
             *) echo "Arquitectura no soportada: ${OS} ${ARCH}" && exit 1 ;;
         esac
         ;;
     Darwin | macos)
         case "$ARCH" in
-            x86_64) TARGET="x86_64-apple-darwin" ;;
+            x64) TARGET="x86_64-apple-darwin" ;;
             arm64 | aarch64) TARGET="aarch64-apple-darwin" ;;
             *) echo "Arquitectura no soportada: ${OS} ${ARCH}" && exit 1 ;;
         esac
