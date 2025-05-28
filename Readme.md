@@ -2,6 +2,7 @@
 
 **Server Version Checker** es una herramienta de línea de comandos escrita en Rust que realiza solicitudes HTTP `GET` a uno o varios dominios/IPs y muestra la versión del servidor web (cabecera `Server`). Es ideal para análisis rápidos, auditorías de seguridad o inventarios de infraestructura.
 
+![image](https://github.com/user-attachments/assets/2502c375-bd51-45c7-8b50-d35a2b290a88)
 ---
 
 ## 🚀 Características
