@@ -28,24 +28,38 @@ cd server-version-checker
 cargo build --release
 ```
 
+### Instalción en Macos y Linux
+- bash
+```bash
+curl -fsSL https://raw.githubusercontent.com/jereok91/svcheck/refs/heads/main/install/MacosLinux/install.sh | bash
+```
+
+- zsh
+```bash
+curl -fsSL https://raw.githubusercontent.com/jereok91/svcheck/refs/heads/main/install/MacosLinux/install.sh | zsh
+```
+
+⚠️  $INSTALL_DIR is not in your PATH.
+Add this line to your shell config (e.g., ~/.bashrc, ~/.zshrc)
+
 ## 🧪 Uso
 
 Consultar uno o varios dominios y/o ips
 
 ```bash
-cargo run -- google.com github.com
+svcheck -- google.com github.com
 ```
 Mostrar todos los encabezados
 ```bash
-cargo run -- example.com --all
+svcheck -- example.com --all
 ```
 Guardar resultados en un archivo
 ```bash
-cargo run -- openai.com --save resultados.txt
+svcheck -- openai.com --save resultados.txt
 ```
 Ver ayuda
 ```bash
-cargo run -- --help
+svcheck -- --help
 ```
 
 ## 📄 Licencia
