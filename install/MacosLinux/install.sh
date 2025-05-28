@@ -47,7 +47,7 @@ echo "Installing svcheck to $INSTALL_DIR ..."
 
 mkdir -p "$INSTALL_DIR"
 
-URL="https://github.com/jereok91/svcheck/raw/refs/heads/main/dist/${TARGET}/${filename}.tar.gz"
+URL="https://github.com/jereok91/svcheck/raw/refs/heads/main/dist/${TARGET}/${FILENAME}.tar.gz"
 
 TMP_DIR=$(mktemp -d)
 curl -fsSL "$URL" -o "$TMP_DIR/svcheck.tar.gz"
