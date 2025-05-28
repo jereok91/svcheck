@@ -54,7 +54,7 @@ TMP_DIR=$(mktemp -d)
 curl -fsSL "$URL" -o "$TMP_DIR/svcheck.tar.gz"
 
 tar -xzf "$TMP_DIR/svcheck.tar.gz" -C "$TMP_DIR"
-mv "$TMP_DIR/$BIN_NAME" "$INSTALL_DIR/$BIN_NAME"
+mv "$TMP_DIR/$FILENAME/$BIN_NAME" "$INSTALL_DIR/$BIN_NAME"
 chmod +x "$INSTALL_DIR/$BIN_NAME"
 
 echo "✅ svcheck installed at $INSTALL_DIR/$BIN_NAME"
