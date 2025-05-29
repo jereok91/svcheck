@@ -1,23 +1,53 @@
+use dotenvy::dotenv;
 use reqwest::blocking::Client;
 use reqwest::header::SERVER;
 use std::{env, fs::File, io::Write};
+use utilities::{
+    ia_integration::{get_recomender_ia, parse_response},
+    validator::{es_direccion_ip_con_puerto, es_url_valida},
+};
+const VERSION: &str = env!("CARGO_PKG_VERSION");
+
+mod utilities;
 
 fn mostrar_ayuda(nombre_programa: &str) {
     println!(
-        "Uso: {} <dominio1> <dominio2> ... [--all] [--save archivo.txt]\n
+        "Uso: {} <dominio1> <dominio2> ... [--all] [--save archivo.txt] [--ia]\n
+        version: {}\n
 Opciones:
+  --version -v      Muestra la versión del programa.
   --all              Muestra todos los encabezados HTTP, no solo 'Server'.
-  --save archivo     Guarda la salida en un archivo de texto.
+  --save archivo     Guarda la salida en un archivo de texto en txt.
+  --ia               Consulta a la IA para recomendaciones.
   --help             Muestra este mensaje de ayuda.",
-        nombre_programa
+        nombre_programa, VERSION
     );
 }
 
 fn main() {
+    dotenv().ok();
     let args: Vec<String> = env::args().collect();
+    let api_key_ia = env::var("API_KEY").unwrap_or_else(|_| {
+        eprintln!("❌ No se encontró la variable de entorno OPENROUTER_API_KEY");
+        std::process::exit(1);
+    });
+    let api_url = env::var("API_URL").unwrap_or_else(|_| {
+        eprintln!("❌ No se encontró la variable de entorno API_URL");
+        std::process::exit(1);
+    });
+
+    let pront_ia = env::var("PRONT_IA").unwrap_or_else(|_| {
+        eprintln!("❌ No se encontró la variable de entorno PRONT_IA");
+        std::process::exit(1);
+    });
 
     if args.iter().any(|arg| arg == "--help") || args.len() < 2 {
         mostrar_ayuda(&args[0]);
+        return;
+    }
+
+    if args.iter().any(|arg| arg == "--version") || args.iter().any(|arg| arg == "-v") {
+        println!("svcheck {}", VERSION);
         return;
     }
 
@@ -26,11 +56,17 @@ fn main() {
     let targets: Vec<String> = args
         .iter()
         .skip(1)
-        .filter(|arg| *arg != "--all" && *arg != "--save" && !arg.ends_with(".txt"))
+        .filter(|arg| {
+            *arg != "--all"
+                && *arg != "--save"
+                && *arg != "--ia"
+                && !arg.ends_with(".txt")
+                && (es_url_valida(arg) || es_direccion_ip_con_puerto(arg))
+        })
         .cloned()
         .collect();
     if targets.is_empty() {
-        eprintln!("❌ Debes especificar al menos un dominio o IP.");
+        eprintln!("❌ Debes especificar al menos un dominio o IP validos.");
         std::process::exit(1);
     }
 
@@ -38,6 +74,7 @@ fn main() {
     let save_file = save_index
         .and_then(|i| args.get(i + 1))
         .map(|s| s.to_string());
+    let consultar_ia = args.iter().any(|arg| arg == "--ia");
 
     let mut all_output = String::new();
 
@@ -87,6 +124,38 @@ fn main() {
 
         // Acumular para guardar
         all_output.push_str(&format!("{}\n{}\n", "=".repeat(60), output));
+    }
+    // Consultar IA
+    if consultar_ia {
+        println!("Consulta a la IA. Esto puede tardar un momento...");
+        match get_recomender_ia(&all_output, &api_key_ia, &pront_ia, &api_url) {
+            Ok(response) => {
+                match parse_response(&response) {
+                    Ok(parsed_response) => {
+                        println!(
+                            "Respuesta de la IA: {}",
+                            parsed_response.choices[0].message.content.to_string()
+                        );
+                        all_output.push_str(&format!(
+                            "\nRespuesta de la IA:\n{}\n",
+                            parsed_response.choices[0].message.content.to_string()
+                        ));
+                    }
+                    Err(e) => {
+                        eprintln!("❌ Error al parsear la respuesta de la IA: {}", e);
+                        all_output.push_str(&format!(
+                            "\nError al parsear la respuesta de la IA: {}\n",
+                            e
+                        ));
+                    }
+                }
+                // println!("Respuesta de la IA: {}",response);
+                all_output.push_str(&format!("\nRespuesta de la IA:\n{}\n", response));
+            }
+            Err(e) => {
+                eprintln!("❌ Error al consultar la IA: {}", e);
+            }
+        };
     }
 
     // Guardar si se especificó

@@ -1,6 +1,6 @@
 [Setup]
 AppName=Server Version Checker
-AppVersion=0.1.0
+AppVersion=0.2.0
 DefaultDirName={pf}\svcheck
 DefaultGroupName=svcheck
 UninstallDisplayIcon={app}\svcheck.exe
