@@ -53,19 +53,19 @@ Add this line to your shell config (e.g., ~/.bashrc, ~/.zshrc)
 Consultar uno o varios dominios y/o ips
 
 ```bash
-svcheck -- google.com github.com
+svcheck google.com github.com
 ```
 Mostrar todos los encabezados
 ```bash
-svcheck -- example.com --all
+svcheck example.com --all
 ```
 Guardar resultados en un archivo
 ```bash
-svcheck -- openai.com --save resultados.txt
+svcheck openai.com --save resultados.txt
 ```
 Ver ayuda
 ```bash
-svcheck -- --help
+svcheck --help
 ```
 
 ## 📄 Licencia
