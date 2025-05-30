@@ -6,7 +6,7 @@ RELEASE="latest"
 OS="$(uname -s)"
 ARCH="$(uname -m)"
 
-OLD_BIN_PATH="$HOME/.local/bin/$BIN_NAME"
+OLD_BIN_PATH="$HOME/.local/bin/svcheck"
 if [ -f "$OLD_BIN_PATH" ]; then
     echo "⚠️  Found old version of $BIN_NAME at $OLD_BIN_PATH. Removing..."
     rm -f "$OLD_BIN_PATH" || {
