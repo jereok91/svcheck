@@ -50,7 +50,7 @@ case "$OS" in
 esac
 
 BIN_NAME="svcheck"
-INSTALL_DIR="$HOME/.local/bin/$BIN_NAME"
+INSTALL_DIR="$HOME/.local/bin/$BIN_NAME/"
 FILENAME="${TARGET}"
 
 echo "📦 Installing $BIN_NAME to $INSTALL_DIR ..."
@@ -82,6 +82,7 @@ mv "$TMP_DIR/$FILENAME/$BIN_NAME" "$INSTALL_DIR/$BIN_NAME" || {
     exit 1
 }
 chmod +x "$INSTALL_DIR/$BIN_NAME"
+chmod +x "$INSTALL_DIR"
 
 echo "✅ svcheck installed at $INSTALL_DIR/$BIN_NAME"
 
