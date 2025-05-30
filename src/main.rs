@@ -27,19 +27,6 @@ Opciones:
 fn main() {
     dotenv().ok();
     let args: Vec<String> = env::args().collect();
-    let api_key_ia = env::var("API_KEY").unwrap_or_else(|_| {
-        eprintln!("❌ No se encontró la variable de entorno OPENROUTER_API_KEY");
-        std::process::exit(1);
-    });
-    let api_url = env::var("API_URL").unwrap_or_else(|_| {
-        eprintln!("❌ No se encontró la variable de entorno API_URL");
-        std::process::exit(1);
-    });
-
-    let pront_ia = env::var("PRONT_IA").unwrap_or_else(|_| {
-        eprintln!("❌ No se encontró la variable de entorno PRONT_IA");
-        std::process::exit(1);
-    });
 
     if args.iter().any(|arg| arg == "--help") || args.len() < 2 {
         mostrar_ayuda(&args[0]);
@@ -128,6 +115,21 @@ fn main() {
     // Consultar IA
     if consultar_ia {
         println!("Consulta a la IA. Esto puede tardar un momento...");
+        // instructivo
+        let api_key_ia = env::var("API_KEY").unwrap_or_else(|_| {
+            eprintln!("❌ No se encontró la variable de entorno OPENROUTER_API_KEY puedes generarla en https://openrouter.ai");
+            std::process::exit(1);
+        });
+        let api_url = env::var("API_URL").unwrap_or_else(|_| {
+            eprintln!("❌ No se encontró la variable de entorno API_URL puede encontrarlo en https://openrouter.ai/");
+            std::process::exit(1);
+        });
+
+        let pront_ia = env::var("PRONT_IA").unwrap_or_else(|_| {
+            eprintln!("❌ No se encontró la variable de entorno PRONT_IA aqui relacionas la intruducion de los datos que pasaras a la ia");
+            std::process::exit(1);
+        });
+
         match get_recomender_ia(&all_output, &api_key_ia, &pront_ia, &api_url) {
             Ok(response) => {
                 match parse_response(&response) {
