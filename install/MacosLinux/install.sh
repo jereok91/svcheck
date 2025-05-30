@@ -50,7 +50,7 @@ case "$OS" in
 esac
 
 BIN_NAME="svcheck"
-INSTALL_DIR="$HOME/.local/bin/$BIN_NAME/"
+INSTALL_DIR="$HOME/.local/bin/$BIN_NAME"
 FILENAME="${TARGET}"
 
 echo "📦 Installing $BIN_NAME to $INSTALL_DIR ..."
@@ -65,6 +65,8 @@ URL="https://github.com/jereok91/svcheck/raw/refs/heads/main/dist/${TARGET}/${FI
 echo "🔗 Descargando desde: $URL"
 
 TMP_DIR=$(mktemp -d)
+trap 'rm -rf "$TMP_DIR"' EXIT
+
 curl -fsSL "$URL" -o "$TMP_DIR/svcheck.tar.gz" || {
     echo "❌ Error al descargar $BIN_NAME" >&2
     rm -rf "$TMP_DIR"
@@ -96,7 +98,7 @@ elif [ -f "$HOME/.profile" ]; then
     SHELL_CONFIG="$HOME/.profile"
 fi
 
-PATH_STRING="export PATH=\"\$HOME/$INSTALL_DIR:\$PATH\""
+PATH_STRING="export PATH=\"$INSTALL_DIR:\$PATH\""
 if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then
   echo "🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧"
   echo ""
@@ -118,5 +120,4 @@ if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then
   fi
 fi
 
-rm -rf "$TMP_DIR"
 
