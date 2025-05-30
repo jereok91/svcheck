@@ -115,24 +115,28 @@ fn main() {
     // Consultar IA
     if consultar_ia {
         println!("Consulta a la IA. Esto puede tardar un momento...");
+        let mut is_no_valibales = false;
         // instructivo
         let api_key_ia = env::var("API_KEY").unwrap_or_else(|_| {
             eprintln!("❌ No se encontró la variable de entorno OPENROUTER_API_KEY puedes generarla en https://openrouter.ai");
-            std::process::exit(1);
+            is_no_valibales= true;
+            String::new()
         });
         let api_url = env::var("API_URL").unwrap_or_else(|_| {
             eprintln!("❌ No se encontró la variable de entorno API_URL puede encontrarlo en https://openrouter.ai/");
-            std::process::exit(1);
+            is_no_valibales= true;
+            String::new()
         });
 
         let pront_ia = env::var("PRONT_IA").unwrap_or_else(|_| {
             eprintln!("❌ No se encontró la variable de entorno PRONT_IA aqui relacionas la intruducion de los datos que pasaras a la ia");
-            std::process::exit(1);
+            is_no_valibales= true;
+            String::new()
         });
 
-        match get_recomender_ia(&all_output, &api_key_ia, &pront_ia, &api_url) {
-            Ok(response) => {
-                match parse_response(&response) {
+        if !is_no_valibales {
+            match get_recomender_ia(&all_output, &api_key_ia, &pront_ia, &api_url) {
+                Ok(response) => match parse_response(&response) {
                     Ok(parsed_response) => {
                         println!(
                             "Respuesta de la IA: {}",
@@ -150,14 +154,15 @@ fn main() {
                             e
                         ));
                     }
+                },
+                Err(e) => {
+                    eprintln!("❌ Error al consultar la IA: {}", e);
                 }
-                // println!("Respuesta de la IA: {}",response);
-                all_output.push_str(&format!("\nRespuesta de la IA:\n{}\n", response));
-            }
-            Err(e) => {
-                eprintln!("❌ Error al consultar la IA: {}", e);
-            }
-        };
+            };
+        } else {
+            print!("❌ Error al crear consultar para la IA:");
+            all_output.push_str(&format!("\n Respuesta de la IA: configuracion incompleta"));
+        }
     }
 
     // Guardar si se especificó
