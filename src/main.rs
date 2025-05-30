@@ -114,6 +114,9 @@ fn main() {
     }
     // Consultar IA
     if consultar_ia {
+        let separador ="🤖";
+        all_output.push_str(&format!("🛰️🛰️🛰️{}🛰️🛰️🛰️", separador.repeat(24)));
+        println!("🛰️🛰️🛰️{}🛰️🛰️🛰️", separador.repeat(24));
         println!("Consulta a la IA. Esto puede tardar un momento...");
         let mut is_no_valibales = false;
         // instructivo
