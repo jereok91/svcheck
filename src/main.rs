@@ -1,13 +1,12 @@
 use dotenvy::dotenv;
+use ia::ia_open_router::cunsulta_ia_run;
 use reqwest::blocking::Client;
 use reqwest::header::SERVER;
 use std::{env, fs::File, io::Write};
-use utilities::{
-    ia_integration::{get_recomender_ia, parse_response},
-    validator::{es_direccion_ip_con_puerto, es_url_valida},
-};
+use utilities::validator::{es_direccion_ip_con_puerto, es_url_valida};
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
+mod ia;
 mod utilities;
 
 fn mostrar_ayuda(nombre_programa: &str) {
@@ -114,58 +113,7 @@ fn main() {
     }
     // Consultar IA
     if consultar_ia {
-        let separador ="🤖";
-        all_output.push_str(&format!("🛰️🛰️🛰️{}🛰️🛰️🛰️", separador.repeat(24)));
-        println!("🛰️🛰️🛰️{}🛰️🛰️🛰️", separador.repeat(24));
-        println!("Consulta a la IA. Esto puede tardar un momento...");
-        let mut is_no_valibales = false;
-        // instructivo
-        let api_key_ia = env::var("API_KEY").unwrap_or_else(|_| {
-            eprintln!("❌ No se encontró la variable de entorno OPENROUTER_API_KEY puedes generarla en https://openrouter.ai");
-            is_no_valibales= true;
-            String::new()
-        });
-        let api_url = env::var("API_URL").unwrap_or_else(|_| {
-            eprintln!("❌ No se encontró la variable de entorno API_URL puede encontrarlo en https://openrouter.ai/");
-            is_no_valibales= true;
-            String::new()
-        });
-
-        let pront_ia = env::var("PRONT_IA").unwrap_or_else(|_| {
-            eprintln!("❌ No se encontró la variable de entorno PRONT_IA aqui relacionas la intruducion de los datos que pasaras a la ia");
-            is_no_valibales= true;
-            String::new()
-        });
-
-        if !is_no_valibales {
-            match get_recomender_ia(&all_output, &api_key_ia, &pront_ia, &api_url) {
-                Ok(response) => match parse_response(&response) {
-                    Ok(parsed_response) => {
-                        println!(
-                            "Respuesta de la IA: {}",
-                            parsed_response.choices[0].message.content.to_string()
-                        );
-                        all_output.push_str(&format!(
-                            "\nRespuesta de la IA:\n{}\n",
-                            parsed_response.choices[0].message.content.to_string()
-                        ));
-                    }
-                    Err(e) => {
-                        eprintln!("❌ Error al parsear la respuesta de la IA: {}", e);
-                        all_output.push_str(&format!(
-                            "\nError al parsear la respuesta de la IA: {}\n",
-                            e
-                        ));
-                    }
-                },
-                Err(e) => {
-                    eprintln!("❌ Error al consultar la IA: {}", e);
-                }
-            };
-        } else {
-            print!("❌ Error al crear consultar para la IA:");
-            all_output.push_str(&format!("\n Respuesta de la IA: configuracion incompleta"));
-        }
+        all_output.push_str(&format!("{}", cunsulta_ia_run(&all_output)));
     }
 
     // Guardar si se especificó
