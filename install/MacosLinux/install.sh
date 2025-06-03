@@ -5,6 +5,8 @@ set -e
 RELEASE="latest"
 OS="$(uname -s)"
 ARCH="$(uname -m)"
+CONFIG_DIR="$HOME/.config/svcheck"
+CONFIG_FILE="$CONFIG_DIR/config.toml"
 
 OLD_BIN_PATH="$HOME/.local/bin/svcheck"
 if [ -f "$OLD_BIN_PATH" ]; then
@@ -96,6 +98,20 @@ elif [ -f "$HOME/.bashrc" ]; then
     SHELL_CONFIG="$HOME/.bashrc"
 elif [ -f "$HOME/.profile" ]; then
     SHELL_CONFIG="$HOME/.profile"
+fi
+
+if [ ! -f "$CONFIG_FILE" ]; then
+  mkdir -p "$CONFIG_DIR"
+  cat <<EOF > "$CONFIG_FILE"
+[ia]
+api_key = "example"
+api_url = "example"
+pront_ia = "Asistente de hardening web. Analiza:  1. Headers (Server+otros si existen)  2. Identifica:     - Versiones vulnerables (CVEs conocidos)     - Configs inseguras (headers sensibles)  3. Recomienda acciones prioritarias  Formato salida:  ### 🔍 [URL]  **🛡️ Headers**: [destacar riesgos]  **🔴 Riesgos**: [lista priorizada]  **✅ Recomendaciones**: [acciones concretas]  Ejemplos:  🔗 https://a.com | Status:200 | Server:Apache/2.4.62  🔗 https://b.com | Headers: Server:nginx/1.18.0\nX-Powered-By:PHP/7.2  Input actual:"
+
+EOF
+  echo "⚙️ Archivo de configuración generado en $CONFIG_FILE"
+else
+  echo "✅ Configuración ya existe en $CONFIG_FILE"
 fi
 
 PATH_STRING="export PATH=\"$INSTALL_DIR:\$PATH\""
