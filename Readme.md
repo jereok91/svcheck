@@ -48,6 +48,34 @@ Add this line to your shell config (e.g., ~/.bashrc, ~/.zshrc)
 
 [:package: Instalador Windows](https://github.com/jereok91/svcheck/raw/refs/heads/main/win/svcheck-installer.exe)
 
+# Configuración de OpenRouter para integración con IA
+
+## Pasos para obtener tus credenciales
+
+### 1. Crear una cuenta en OpenRouter
+🔹 Visita [https://openrouter.ai](https://openrouter.ai)  
+🔹 Regístrate con tu email o cuenta de GitHub  
+
+### 2. Generar tu API Key
+1. Ve a [https://openrouter.ai/keys](https://openrouter.ai/keys)
+2. Haz clic en "Create a key"
+3. Copia tu API Key (guárdala en un lugar seguro)
+![image](https://github.com/user-attachments/assets/5b2e393f-4644-4b52-bf13-a1e9ea5ad0b3)
+![image](https://github.com/user-attachments/assets/9b141efc-1d92-438f-a994-fd91bba55faa)
+
+
+### 3. Configurar tu aplicación
+Puedes usar la API directamente o mediante archivo de configuracion:
+
+#### configurando el archivo .../svcheck/config.toml
+```toml
+[ia]
+api_key = "KEY_GENERATE"
+api_url = "URL_MODELO"
+pront_ia = "Asistente de hardening web. Analiza:  1. Headers (Server+otros si existen)  2. Identifica:     - Versiones vulnerables (CVEs conocidos)     - Configs inseguras (headers sensibles)  3. Recomienda acciones prioritarias  Formato salida:  ### 🔍 [URL]  **🛡️ Headers**: [destacar riesgos]  **🔴 Riesgos**: [lista priorizada]  **✅ Recomendaciones**: [acciones concretas]  Ejemplos:  🔗 https://a.com | Status:200 | Server:Apache/2.4.62  🔗 https://b.com | Headers: Server:nginx/1.18.0\nX-Powered-By:PHP/7.2  Input actual:"
+
+```
+
 ## 🧪 Uso
 
 Consultar uno o varios dominios y/o ips
