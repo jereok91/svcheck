@@ -1,5 +1,5 @@
 =========================================
- Server Version Checker - svcheck (v0.1.0)
+ Server Version Checker - svcheck (v0.2.0)
 =========================================
 
 Descripción:
@@ -39,7 +39,7 @@ para que el comando `svcheck` funcione correctamente desde cualquier ubicación.
 
 
 =========================================
- Server Version Checker - svcheck (v0.1.0)
+ Server Version Checker - svcheck (v0.2.0)
 =========================================
 
 Description:

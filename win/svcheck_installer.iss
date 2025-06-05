@@ -12,6 +12,8 @@ SolidCompression=yes
 [Files]
 Source: "C:\proyect\svcheck\win\svcheck.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\proyect\svcheck\win\README.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\proyect\svcheck\win\config.toml"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\proyect\svcheck\win\README-POST-INSTALL.txt"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\svcheck"; Filename: "{app}\svcheck.exe"
@@ -27,7 +29,7 @@ Filename: "{cmd}"; Parameters: "/C setx PATH ""{app};%PATH%"""; Flags: runhidden
 // Esto refresca el PATH para que esté disponible sin reiniciar sesión
 function InitializeSetup(): Boolean;
 begin
-  MsgBox('Al finalizar la instalación, abre una nueva terminal y escribe: svcheck dominio.com', mbInformation, MB_OK);
+  MsgBox('Al finalizar la instalación, abre una nueva terminal y escribe: svcheck dominio.com, modifica la informacio el archivo config.toml', mbInformation, MB_OK);
   Result := True;
 end;
 
