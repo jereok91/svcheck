@@ -1,6 +1,5 @@
 use serde::Deserialize;
 use std::fs;
-use std::path::PathBuf;
 
 #[derive(Debug, Deserialize)]
 pub struct Config {
@@ -19,7 +18,7 @@ impl Config {
         #[cfg(not(windows))]
         {
             let config_path = dirs::config_dir()
-                .unwrap_or_else(|| PathBuf::from("."))
+                .unwrap_or_else(|| std::path::PathBuf::from("."))
                 .join("svcheck")
                 .join("config.toml");
             println!("{}", &config_path.to_str().unwrap());
@@ -34,7 +33,11 @@ impl Config {
         }
         #[cfg(windows)]
         {
-            let config_path = std::env::current_exe()?.parent().unwrap().to_path_buf().join("config.toml");            
+            let config_path = std::env::current_exe()?
+                .parent()
+                .unwrap()
+                .to_path_buf()
+                .join("config.toml");
             println!("{}", &config_path.to_str().unwrap());
 
             if !config_path.exists() {
@@ -45,6 +48,5 @@ impl Config {
             let config: Config = toml::from_str(&contents)?;
             Ok(config)
         }
-
     }
 }
