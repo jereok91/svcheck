@@ -24,8 +24,8 @@
 ## ⚙️ Instalación
 
 ```bash
-git clone https://github.com/tu-usuario/server-version-checker.git
-cd server-version-checker
+git clone https://github.com/jereok91/svcheck.git
+cd svcheck
 cargo build --release
 ```
 
