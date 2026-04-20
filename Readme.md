@@ -23,6 +23,22 @@
 
 ## ⚙️ Instalación
 
+### Desde crates.io (recomendado)
+
+Si ya tienes [Rust](https://www.rust-lang.org/tools/install) instalado, la forma más sencilla es:
+
+```bash
+cargo install svcheck
+```
+
+El binario queda disponible en `~/.cargo/bin/svcheck` (asegúrate de tener esa ruta en tu `PATH`). Para actualizar a la última versión:
+
+```bash
+cargo install svcheck --force
+```
+
+### Compilando desde el código fuente
+
 ```bash
 git clone https://github.com/jereok91/svcheck.git
 cd svcheck
