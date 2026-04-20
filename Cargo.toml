@@ -1,6 +1,6 @@
 [package]
 name = "svcheck"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2024"
 rust-version = "1.85"
 description = "CLI para consultar la cabecera Server de uno o varios dominios/IPs y opcionalmente analizarla con IA vía OpenRouter."
